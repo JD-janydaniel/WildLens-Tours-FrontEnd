@@ -287,6 +287,7 @@ const DashboardProfile = () => {
               onChange={handleChange}
             />
           </div>
+          <div className="d-flex flex-row  justify-content-around align-items-center">
           <button
             type="submit"
             className="btn btn-lg border-0"
@@ -295,15 +296,16 @@ const DashboardProfile = () => {
             {loading ? "loading..." : "update"}
           </button>
           {console.log(currentuser)}
-          {currentuser.rest.isAdmin && (
-            <Link to="create-tours">
-              <button type="submit" className="btn btn-lg border-0" >
+          </div>
+        </form>
+        {currentuser.rest.isAdmin && (
+            <Link className="d-flex justify-content-center text-decoration" to="/dashboard?tab=tours">
+              <button type="submit" className="btn btn-lg border-0 text-decoration" >
                 Create Tours
               </button>
             </Link>
           )}
-        </form>
-        <div className="mt-2 d-flex justify-content-around">
+        <div className="mt-2 mb-3 d-flex justify-content-around">
           <span
             className="text-danger"
             // onClick={() => {

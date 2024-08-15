@@ -3,6 +3,9 @@ import DashboardSidebar from "../Components/DashboardSidebar";
 import Header from "../Components/Header";
 import { useLocation } from "react-router-dom";
 import DashboardProfile from "../Components/DashboardProfile";
+import CreateTourPackages from "./CreateTourPackages";
+import CreateGuide from "./CreateGuide";
+
 
 const Dashboard = () => {
   const location = useLocation();
@@ -23,6 +26,8 @@ const Dashboard = () => {
           </div>
           <div className="col-md-10">
             {tab === "profile" && <DashboardProfile />}
+            {tab === "create-tours" && <CreateTourPackages />}
+            {tab === 'create-guide' && <CreateGuide />}
           </div>
         </div>
       </div>

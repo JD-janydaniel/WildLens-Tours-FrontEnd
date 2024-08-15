@@ -15,6 +15,8 @@ import Dashboard from "./Pages/Dashboard";
 import DashboardProfile from "./Components/DashboardProfile";
 import OnlyAdminPrivateRoute from "./Components/OnlyAdminPrivateRoute";
 import CreateTourPackages from "./Pages/CreateTourPackages";
+import LandingPage from "./Pages/LandingPage";
+import Bookings from "./Pages/Bookings";
 
 const App = () => {
   return (
@@ -30,18 +32,20 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>//privat routing
-        <Route path="/create-tours" element={<CreateTourPackages />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         {/* <Route path="/dashboard" element={< Dashboard />} /> */}
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+        <Route path="/book-tours" element={<LandingPage />} />
+        <Route path='/booking/:id' element={<Bookings />} />
         {/* <Route path="/dashboard?tab=profile" element={<DashboardProfile />} /> */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   );

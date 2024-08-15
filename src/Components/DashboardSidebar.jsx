@@ -93,10 +93,21 @@ const DashboardSidebar = () => {
                     <li className="nav-item">
                     <Link
                       className="nav-link d-flex align-items-center gap-2"
-                      to="/dashboard?tab=tours"
+                      to="/dashboard?tab=create-tours"
                     >
                       <IoIosCreate className="fs-4 text-secondary" />
                      Create Tours
+                    </Link>
+                    </li>
+                  )}
+                  {currentuser.rest.isAdmin && (
+                    <li className="nav-item">
+                    <Link
+                      className="nav-link d-flex align-items-center gap-2"
+                      to="/dashboard?tab=create-guide"
+                    >
+                      <IoIosCreate className="fs-4 text-secondary" />
+                     Create Guide
                     </Link>
                     </li>
                   )}
