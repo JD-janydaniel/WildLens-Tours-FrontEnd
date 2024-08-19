@@ -7,6 +7,7 @@ import { HiInformationCircle } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutSuccess } from "../Redux/Slice/authSlice";
 import { IoIosCreate } from "react-icons/io";
+import { PiBookFill } from "react-icons/pi";
 
 const DashboardSidebar = () => {
   const dispatch = useDispatch();
@@ -29,10 +30,7 @@ const DashboardSidebar = () => {
 
   return (
     <div>
-      {/* <div className="container-fluid">
-        <div className="row"> */}
           <div className="sidebar border p-0 bg-body-teritary min-vh-100">
-            {/* //col-md-3 col-lg-2 */}
             <div
               className="offcanvas-md offcanvas-end bg-body-teritary"
               tabIndex={-1}
@@ -83,7 +81,6 @@ const DashboardSidebar = () => {
                       Profile
                       <span
                         className="badge text-bg-secondary"
-                        // style={{ margin: "0px 0px 0px 100px" }}
                       >
                        {currentuser.rest.isAdmin ? "Admin" : "User" }
                       </span>
@@ -111,6 +108,15 @@ const DashboardSidebar = () => {
                     </Link>
                     </li>
                   )}
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link d-flex align-items-center gap-2"
+                      to="/dashboard?tab=display-bookings"
+                    >
+                      <PiBookFill className="fs-4 text-secondary" />
+                      My Bookings
+                    </Link>
+                    </li>
                   <hr />
                   <li className="nav-item">
                     <Link
@@ -126,8 +132,6 @@ const DashboardSidebar = () => {
             </div>
           </div>
         </div>
-    //   </div>
-    // </div>
   );
 };
 

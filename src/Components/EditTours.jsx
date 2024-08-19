@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { app } from "../firebase";
 import {
   getDownloadURL,
@@ -12,23 +12,40 @@ import "react-circular-progressbar/dist/styles.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateTourPackages = () => {
+const EditTours = ({ tourId }) => {
   const [file, setFile] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    image: "",
-    location: "",
-    price: "",
-    noOfDays: "",
-  });
-  const [createToursError, setCreateToursError] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [editToursError, setEditToursError] = useState(null);
   const navigate = useNavigate();
 
-  //image upload
-  const handleUploadimage = async () => {
+  // Fetch the existing tour data when the component mounts
+  useEffect(() => {
+    if (tourId) {
+        fetchTourData(tourId);
+      }
+  }, [tourId]);
+
+  const fetchTourData = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/tour/getToursById/${id}`);
+      const data = await response.json();
+      if (!response.ok) {
+        toast.error(data.message);
+        return;
+      }else{
+        setFormData(data.tours);
+        toast.success("Tour details loaded successfully");
+      }
+      setFormData(data.tours); // Populate form with existing tour data
+    } catch (error) {
+      toast.error("Failed to load tour details");
+    }
+  };
+
+  // Handle image upload
+  const handleUploadImage = async () => {
     try {
       if (!file) {
         setImageFileUploadError("Please select an image file");
@@ -65,18 +82,23 @@ const CreateTourPackages = () => {
       setImageFileUploadError("Image upload failed");
       setImageFileUploadProgress(null);
       toast.error("Image upload failed");
-      console.log(error);
+      console.error(error);
     }
   };
 
-  //create tours
+  // Handle form submission to update the tour
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!tourId) {
+        toast.error("Tour ID not found");
+        return;
+      }
+  
     try {
       const response = await fetch(
-        "http://localhost:5000/api/tour/create-tours",
+        `http://localhost:5000/api/tour/update-tours/${tourId}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             token: localStorage.getItem("Token"),
@@ -86,24 +108,16 @@ const CreateTourPackages = () => {
       );
       const data = await response.json();
       if (!response.ok) {
-        setCreateToursError(data.message);
+        setEditToursError(data.message);
         toast.error(data.message);
         return;
       } else {
-        setCreateToursError(null);
-        toast.success("Tours package created successfully");
-        setFormData({
-          title: "",
-          description: "",
-          image: "",
-          location: "",
-          price: "",
-          noOfDays: "",
-        });
-        navigate("/dashboard?tab=create-tours");
+        setEditToursError(null);
+        toast.success("Tour package updated successfully");
+        navigate("/tours");
       }
     } catch (error) {
-      setCreateToursError(error.message);
+      setEditToursError(error.message);
       toast.error(error.message);
     }
   };
@@ -111,106 +125,75 @@ const CreateTourPackages = () => {
   return (
     <div className="p-4 mt-4 shadow rounded-4">
       <h1 className="text-center mb-4 linear-text-gradient">
-        Create Tours Package
+        Edit Tours
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="input-group input-group-lg mb-3">
-          <span
-            className="input-group-text fw-medium"
-            id="inputGroup-sizing-lg"
-          >
+          <span className="input-group-text fw-medium" id="inputGroup-sizing-lg">
             Tour Title
           </span>
           <input
             type="text"
             id="title"
             className="form-control"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-lg"
-            placeholder="Enter the tour title"
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
+            value={formData.title || ""}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           />
         </div>
         <div className="input-group input-group-lg mb-3">
-          <span
-            className="input-group-text fw-medium"
-            id="inputGroup-sizing-lg"
-          >
+          <span className="input-group-text fw-medium" id="inputGroup-sizing-lg">
             Tour Description
           </span>
           <textarea
-            type="text"
             rows={2}
             id="description"
             className="form-control"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-lg"
-            placeholder="Enter the tour description"
+            value={formData.description || ""}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
           />
         </div>
         <div className="input-group input-group-lg mb-3">
-          <span
-            className="input-group-text fw-medium"
-            id="inputGroup-sizing-lg"
-          >
+          <span className="input-group-text fw-medium" id="inputGroup-sizing-lg">
             Tour Location
           </span>
           <input
             type="text"
             id="location"
             className="form-control"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-lg"
-            placeholder="Enter the tour Location"
+            value={formData.location || ""}
             onChange={(e) =>
               setFormData({ ...formData, location: e.target.value })
             }
           />
         </div>
         <div className="input-group input-group-lg mb-3">
-          <span
-            className="input-group-text fw-medium"
-            id="inputGroup-sizing-lg"
-          >
+          <span className="input-group-text fw-medium" id="inputGroup-sizing-lg">
             Price
           </span>
           <input
             type="text"
             id="price"
             className="form-control"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-lg"
-            placeholder="Enter the tour price"
-            onChange={(e) =>
-              setFormData({ ...formData, price: e.target.value })
-            }
+            value={formData.price || ""}
+            onChange={(e) => setFormData({ ...formData, price: e.target.value })}
           />
         </div>
         <div className="input-group input-group-lg mb-3">
-          <span
-            className="input-group-text fw-medium"
-            id="inputGroup-sizing-lg"
-          >
+          <span className="input-group-text fw-medium" id="inputGroup-sizing-lg">
             No of Days
           </span>
           <input
             type="text"
             id="noOfDays"
             className="form-control"
-            aria-label="Start Date"
-            aria-describedby="inputGroup-sizing-lg"
-            onChange={(e) =>
-              setFormData({ ...formData, noOfDays: e.target.value })
-            }
+            value={formData.noOfDays || ""}
+            onChange={(e) => setFormData({ ...formData, noOfDays: e.target.value })}
           />
         </div>
         <div
-          className="mb-3 py-3 d-flex justify-content-around rounded-3 "
+          className="mb-3 py-3 d-flex justify-content-around rounded-3"
           style={{ border: "4px dashed green" }}
         >
           <input
@@ -221,7 +204,7 @@ const CreateTourPackages = () => {
           <button
             className="btn border-0 btn-sm"
             type="button"
-            onClick={handleUploadimage}
+            onClick={handleUploadImage}
             disabled={imageFileUploadProgress}
           >
             {imageFileUploadProgress ? (
@@ -236,32 +219,22 @@ const CreateTourPackages = () => {
             )}
           </button>
         </div>
-        {/* {imageFileUploadError && (
-          <div className="alert alert-danger" role="alert">
-            {imageFileUploadError}
-          </div>
-        )} */}
         {formData.image && (
           <img
             className="mb-3"
             style={{ height: "300px", width: "300px" }}
             src={formData.image}
-            alt="upload"
+            alt="Tour"
           />
         )}
-        <div className="d-flex justify-content-center ">
+        <div className="d-flex justify-content-center">
           <button type="submit" className="btn btn-lg border-0">
-            Create Tours
+            Update Tour
           </button>
         </div>
-        {/* {createToursError && (
-          <div className="alert alert-danger" role="alert">
-            {createToursError}
-          </div>
-        )} */}
       </form>
     </div>
   );
 };
 
-export default CreateTourPackages;
+export default EditTours;

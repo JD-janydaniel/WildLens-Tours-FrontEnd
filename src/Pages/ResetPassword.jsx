@@ -1,16 +1,44 @@
-import React from 'react';
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ResetPassword = () => {
-    return (
-        <div>
-            <div className="container  signup mt-5">
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const { id, token } = useParams();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = { password, confirmPassword };
+    await axios
+      .post(
+        `http://localhost:5000/api/auth/reset-password/${id}/${token}`,
+        payload
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/signin");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+    setPassword("");
+    setConfirmPassword("");
+  };
+  return (
+    <div>
+      <div className="container  signup mt-5">
         <div className="row py-5">
           <div className="col-12 col-md-6 px-4 py-5 shadow rounded-4 order-2 overflow-auto align-self-center ">
             <h1 className="text-center mb-3 linear-text-gradient">
-             Reset Password !
+              Reset Password !
             </h1>
-            <form>
-            <div className="input-group input-group-lg mb-3">
+            <form onSubmit={handleSubmit}>
+              <div className="input-group input-group-lg mb-3">
                 <span
                   className="input-group-text fw-medium"
                   id="inputGroup-sizing-lg"
@@ -24,9 +52,8 @@ const ResetPassword = () => {
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                   required
-                  placeholder='Enter Your Password'
-                  //   value={password}
-                  //   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter Your Password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="input-group input-group-lg mb-3">
@@ -43,9 +70,8 @@ const ResetPassword = () => {
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                   required
-                  placeholder='Re Enter Your Password'
-                  //   value={password}
-                  //   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Re Enter Your Password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
               <div className="d-flex flex-column  justify-content-center">
@@ -66,14 +92,15 @@ const ResetPassword = () => {
             </div>
             <div>
               <h3 className="mt-sm-4 fs-3 lead">
-              Please enter your new password and confirm it to reset your account credentials.
+                Please enter your new password and confirm it to reset your
+                account credentials.
               </h3>
             </div>
           </div>
         </div>
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default ResetPassword;

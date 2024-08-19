@@ -47,7 +47,7 @@ const Signin = () => {
         localStorage.setItem("Token",data.token);
         dispatch(signInSuccess(data));
         toast.success(data.message);
-        navigate("/");
+        navigate("/tours");
       }
     } catch (error) {
       dispatch(signInFailure(error.message));

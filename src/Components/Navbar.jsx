@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaMoon, FaSun, FaWolfPackBattalion } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,19 +7,22 @@ import { PiSignOutBold } from "react-icons/pi";
 import "../index.css";
 import { toggleTheme } from "../Redux/Slice/themeSlice";
 import { signOutSuccess } from "../Redux/Slice/authSlice";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const { currentuser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleSignOut = () => {
     dispatch(signOutSuccess());
     localStorage.removeItem("Token");
     toast.success("You have been successfully logged out");
     navigate("/signin");
   };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg border-bottom">
@@ -47,18 +50,6 @@ const Navbar = () => {
             className="collapse fw-medium fs-5 navbar-collapse"
             id="navbarNavAltMarkup"
           >
-            <form
-              className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-              role="search"
-            >
-              <input
-                type="search"
-                className="form-control"
-                placeholder="Search..."
-                aria-label="Search"
-              />
-            </form>
-
             <div className="navbar-nav">
               <NavLink to="/" className="nav-link">
                 Home
@@ -66,8 +57,8 @@ const Navbar = () => {
               <NavLink to="/about" className="nav-link">
                 About
               </NavLink>
-              <NavLink to="/book-tours" className="nav-link">
-              WildLife Tours
+              <NavLink to="/tours" className="nav-link">
+                WildLife Tours
               </NavLink>
               <NavLink to="/dashboard" className="nav-link">
                 Dashboard
@@ -121,7 +112,11 @@ const Navbar = () => {
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <Link className="dropdown-item" onClick={handleSignOut} role="button">
+                      <Link
+                        className="dropdown-item"
+                        onClick={handleSignOut}
+                        role="button"
+                      >
                         <PiSignOutBold className="fs-4 me-2" /> Sign Out
                       </Link>
                     </li>

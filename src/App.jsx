@@ -39,14 +39,12 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
-        <Route path="/book-tours" element={<LandingPage />} />
+        <Route path="/tours" element={<LandingPage />} />
         <Route path='/booking/:id' element={<Bookings />} />
         {/* <Route path="/dashboard?tab=profile" element={<DashboardProfile />} /> */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <div>
-        {/* <Footer /> */}
-      </div>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };
