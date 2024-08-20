@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "../index.css";
+import { Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 const About = () => {
   // State for toggling content visibility
   const [showMoreTechnologies, setShowMoreTechnologies] = useState(false);
 
   return (
-    <div className="container lead fs-3 mt-5">
+    <div className="container lead fs-5 mb-5 py-3 mt-5">
       {/* Introduction Section */}
       <section className="mb-5 text-center">
         <h1>About WildLens Tours</h1>
@@ -234,7 +237,7 @@ const About = () => {
           </div>
         )}
       </div>
-
+<hr />
       {/* Call to Action Section */}
       <section className="text-center mt-5">
         <h2>Join Us</h2>
@@ -246,6 +249,20 @@ const About = () => {
           Explore Our Tours
         </a>
       </section>
+      <section className="text-center mt-3">
+  <h2>Connect with Us</h2>
+  <p className="fs-5">
+    Follow us on GitHub and LinkedIn to stay updated with the latest news and projects from WildLens Tours.
+  </p>
+  <div>
+    <Link to="https://github.com/JD-janydaniel" target="_blank" rel="noopener noreferrer" className="me-3" >
+      <FaGithub size={32} />
+    </Link>
+    <Link to="https://www.linkedin.com/in/jany-daniel-934360208/" target="_blank" rel="noopener noreferrer" >
+      <FaLinkedin size={32} />
+    </Link>
+  </div>
+</section>
     </div>
   );
 };

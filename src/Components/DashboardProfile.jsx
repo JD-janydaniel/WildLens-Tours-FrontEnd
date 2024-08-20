@@ -31,20 +31,11 @@ const DashboardProfile = () => {
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
 
-  // Ensure currentuser.rest is defined before accessing its properties
-  // const initialFormData = {
-  //   username: currentuser?.rest?.username || "",
-  //   email: currentuser?.rest?.email || "",
-  //   password: "",
-  //   profilePicture: currentuser?.rest?.profilePicture || "",
-  // };
-
   const [formData, setFormData] = useState({});
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
-  // const [showModel, setShowModel] = useState(false);
-
+  
   const filePickerRef = useRef();
 
   //onchange in the image file upload
@@ -121,7 +112,7 @@ const DashboardProfile = () => {
     try {
       dispatch(updateStart());
       const response = await fetch(
-        `http://localhost:5000/api/user/update-user/${currentuser.rest._id}`,
+        `https://wildlens-tours-backend-culd.onrender.com/api/user/update-user/${currentuser.rest._id}`,
         {
           method: "PUT",
           headers: {
@@ -158,7 +149,7 @@ const DashboardProfile = () => {
     try {
       dispatch(deleteUserStart());
       const response = await fetch(
-        `http://localhost:5000/api/user/delete-user/${currentuser.rest._id}`,
+        `https://wildlens-tours-backend-culd.onrender.com/api/user/delete-user/${currentuser.rest._id}`,
         {
           method: "DELETE",
           headers: {
@@ -308,9 +299,6 @@ const DashboardProfile = () => {
         <div className="mt-2 mb-3 d-flex justify-content-around">
           <span
             className="text-danger"
-            // onClick={() => {
-            //   setShowModel(true);
-            // }}
             role="button"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"

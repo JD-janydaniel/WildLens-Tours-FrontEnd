@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaWolfPackBattalion } from "react-icons/fa";
 import "../index.css";
+import Footer from "../Components/Footer";
 
 const Home = () => {
   return (
     <div>
-      <div className="container p-5">
+      <div className="container-fluid p-5">
         <div className="row p-5">
           <div className="col-12  px-4 py-5">
             <h1 className="text-center display-3 fw-bold linear-text-gradient">
@@ -29,6 +30,9 @@ const Home = () => {
               </Link>
             </div>
           </div>
+        </div>
+        <div className="row">
+          <Footer />
         </div>
       </div>
     </div>

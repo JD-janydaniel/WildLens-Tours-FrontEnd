@@ -8,6 +8,7 @@ import CreateGuide from "./CreateGuide";
 import { useSelector } from "react-redux";
 import EditTours from "../Components/EditTours";
 import DisplayBooking from "../Components/DisplayBooking";
+import Footer from "../Components/Footer";
 
 const Dashboard = () => {
   const { currentuser } = useSelector((state) => state.user);
@@ -27,8 +28,8 @@ const Dashboard = () => {
     }
   }, [location.search]);
   return (
-    <div className="vh-100">
-      <div className="container-fluid">
+    <div className="">
+      <div className="container-fluid vh-100">
         <div className="row">
           <div className="col-md-2">
             <DashboardSidebar />
@@ -40,6 +41,9 @@ const Dashboard = () => {
             {tab === `edit-tours` && tourId && <EditTours tourId={tourId}/>}
             {tab === "display-bookings" && <DisplayBooking userId={userId} />}
           </div>
+        </div>
+        <div className="row">
+          <Footer />
         </div>
       </div>
     </div>

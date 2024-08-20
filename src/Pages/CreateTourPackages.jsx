@@ -74,7 +74,7 @@ const CreateTourPackages = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:5000/api/tour/create-tours",
+        "https://wildlens-tours-backend-culd.onrender.com/api/tour/create-tours",
         {
           method: "POST",
           headers: {

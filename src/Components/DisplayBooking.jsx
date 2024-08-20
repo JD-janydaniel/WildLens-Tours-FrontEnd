@@ -12,7 +12,7 @@ const DisplayBooking = ({ userId }) => {
   const fetchBookings = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/booking/getAllBooking/${userId}`,
+        `https://wildlens-tours-backend-culd.onrender.com/api/booking/getAllBooking/${userId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -60,22 +60,50 @@ const DisplayBooking = ({ userId }) => {
                     <strong>Number of People:</strong> {element.numberOfPeople}
                   </p>
                   <p className="card-text">
-                    <strong>Check-In Date:</strong> {new Date(element.checkInDate).toLocaleDateString()}
+                    <strong>Check-In Date:</strong>
+                    {new Date(element.checkInDate).toLocaleDateString()}
                   </p>
                   <p className="card-text">
-                    <strong>Booking Date:</strong> {new Date(element.bookingDate).toLocaleDateString()}
+                    <strong>Booking Date:</strong>
+                    {new Date(element.bookingDate).toLocaleDateString()}
                   </p>
                   <p className="card-text">
                     <strong>Total Price:</strong> ${element.totalPrice}
                   </p>
                   <p className="card-text">
-                    <strong>Status:</strong> {element.status}
+                    <strong>Status:</strong>
+                    <span
+                      className={`badge ${
+                        element.status === "confirmed"
+                          ? "text-bg-success"
+                          : element.status === "pending"
+                          ? "text-bg-warning"
+                          : element.status === "cancelled"
+                          ? "text-bg-danger"
+                          : ""
+                      }`}
+                    >
+                      {element.status}
+                    </span>
                   </p>
                   <p className="card-text">
                     <strong>Transaction ID:</strong> {element.transactionId}
                   </p>
                   <p className="card-text">
-                    <strong>Payment Status:</strong> <span class="badge text-bg-success">{element.paymentStatus}</span>
+                    <strong>Payment Status:</strong>{" "}
+                    <span
+                      className={`badge ${
+                        element.paymentStatus === "completed"
+                          ? "text-bg-success"
+                          : element.paymentStatus === "pending"
+                          ? "text-bg-warning"
+                          : element.paymentStatus === "failed"
+                          ? "text-bg-danger"
+                          : ""
+                      }`}
+                    >
+                      {element.paymentStatus}
+                    </span>
                   </p>
                 </div>
               </div>

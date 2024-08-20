@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     const payload = { email };
     await axios
       .post(
-        "http://localhost:5000/api/auth/forgot-password",
+        "https://wildlens-tours-backend-culd.onrender.com/api/auth/forgot-password",
         payload
       )
       .then((res) => {

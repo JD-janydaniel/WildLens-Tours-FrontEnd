@@ -17,7 +17,7 @@ const OAuth = () => {
     provider.setCustomParameters({ prompt: "select_account" });
     try {
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch("http://localhost:5000/api/auth/google-auth", {
+      const res = await fetch("https://wildlens-tours-backend-culd.onrender.com/api/auth/google-auth", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

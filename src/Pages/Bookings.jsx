@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 const Bookings = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const Bookings = () => {
   const [phoneNumberValue, setPhoneNumberValue] = useState("");
   const [address, setAddress] = useState("");
   const [total, setTotal] = useState(tourData.price || 0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTourData();
@@ -26,7 +28,7 @@ const Bookings = () => {
   const fetchTourData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tour/getToursById/${id}`
+        `https://wildlens-tours-backend-culd.onrender.com/api/tour/getToursById/${id}`
       );
       const data = await response.json();
       if (!response.ok) {
@@ -45,7 +47,7 @@ const Bookings = () => {
   const fetchGuideData = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/guide/getAllTourGuides"
+        "https://wildlens-tours-backend-culd.onrender.com/api/guide/getAllTourGuides"
       );
       const data = await response.json();
       if (!response.ok) {
@@ -79,7 +81,7 @@ const Bookings = () => {
     //post request to create booking
     try {
       const response = await fetch(
-        "http://localhost:5000/api/booking/create-booking",
+        "https://wildlens-tours-backend-culd.onrender.com/api/booking/create-booking",
         {
           method: "POST",
           headers: {
@@ -101,6 +103,7 @@ const Bookings = () => {
         setPhoneNumberValue("");
         setAddress("");
         setTotal(tourData.price);
+        navigate("/dashboard?tab=display-bookings");
       }
     } catch (error) {
       toast.error(error.message);

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signUpStart,
@@ -29,7 +28,7 @@ const Signup = () => {
     try {
       dispatch(signUpStart());
       const response = await fetch(
-        "http://localhost:5000/api/auth/register-user",
+        "https://wildlens-tours-backend-culd.onrender.com/api/auth/register-user",
         {
           method: "post",
           headers: {

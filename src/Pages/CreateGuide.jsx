@@ -10,7 +10,7 @@ const CreateGuide = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/api/guide/create-tour-guide',{
+            const response = await fetch('https://wildlens-tours-backend-culd.onrender.com/api/guide/create-tour-guide',{
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

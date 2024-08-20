@@ -9,6 +9,7 @@ import { CiCalendarDate } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
 import Modal from "react-bootstrap/Modal";
 import { FaStar } from "react-icons/fa";
+import Footer from "../Components/Footer";
 
 const LandingPage = () => {
   const [tourData, setTourData] = useState([]);
@@ -28,7 +29,7 @@ const LandingPage = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tour/getAllTours?search=${searchTerm}`
+        `https://wildlens-tours-backend-culd.onrender.com/api/tour/getAllTours?search=${searchTerm}`
       );
       const data = await response.json();
       if (!response.ok) {
@@ -73,7 +74,7 @@ const LandingPage = () => {
       };
 
       const response = await fetch(
-        "http://localhost:5000/api/review/create-review",
+        "https://wildlens-tours-backend-culd.onrender.com/api/review/create-review",
         {
           method: "POST",
           headers: {
@@ -101,7 +102,7 @@ const LandingPage = () => {
   const handleShowViewReviewsModal = async (tour) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/review/getTourReviews/${tour._id}`
+        `https://wildlens-tours-backend-culd.onrender.com/api/review/getTourReviews/${tour._id}`
       );
       const data = await response.json();
       if (!response.ok) {
@@ -143,7 +144,7 @@ const LandingPage = () => {
   const handleDeleteTour = async (tour) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tour/delete-tours/${tour._id}`,
+        `https://wildlens-tours-backend-culd.onrender.com/api/tour/delete-tours/${tour._id}`,
         {
           method: "DELETE",
         }
@@ -160,11 +161,11 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="container lead px-5">
-      <div className="row rounded-4 shadow py-3 mt-3">
-        <div className="col-12 d-flex justify-content-center">
+    <div className="container-fluid lead px-5">
+      <div className="row d-flex justify-content-center align-items-center  mt-5">
+        <div className="col-6 py-3 rounded-4 shadow  d-flex justify-content-center">
           <form role="search" className="" onSubmit={handleSearch}>
-            <div className="input-group  mb-3" style={{ width: "600px" }}>
+            <div className="input-group  mb-3" style={{width:"600px"}}>
               <input
                 type="seatch"
                 className="form-control"
@@ -327,6 +328,7 @@ const LandingPage = () => {
           )}
         </Modal.Body>
       </Modal>
+      <Footer />
     </div>
   );
 };

@@ -96,7 +96,7 @@ const EditTours = ({ tourId }) => {
   
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tour/update-tours/${tourId}`,
+        `https://wildlens-tours-backend-culd.onrender.com/api/tour/update-tours/${tourId}`,
         {
           method: "PUT",
           headers: {
