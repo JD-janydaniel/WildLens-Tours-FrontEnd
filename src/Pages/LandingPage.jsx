@@ -163,9 +163,9 @@ const LandingPage = () => {
   return (
     <div className="container-fluid lead px-5">
       <div className="row d-flex justify-content-center align-items-center  mt-5">
-        <div className="col-6 py-3 rounded-4 shadow  d-flex justify-content-center">
+        <div className="col-6 py-3 rounded-4 shadow  d-flex justify-content-center overflow-hidden">
           <form role="search" className="" onSubmit={handleSearch}>
-            <div className="input-group  mb-3" style={{width:"600px"}}>
+            <div className="input-group  mb-3" >
               <input
                 type="seatch"
                 className="form-control"
