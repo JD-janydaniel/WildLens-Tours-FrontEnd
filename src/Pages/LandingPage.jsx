@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BiRupee } from "react-icons/bi";
@@ -21,12 +21,18 @@ const LandingPage = () => {
   const [reviewText, setReviewText] = useState(""); // State for review text
   const [reviews, setReviews] = useState([]); // State for storing reviews of a selected tour
   const { currentuser } = useSelector((state) => state.user); // Get user data from Redux store
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
   }, [searchTerm]); // Trigger data fetch when searchTerm changes
 
   const fetchData = async () => {
+    if (!currentuser) {
+      toast.error("You need to sign in to view the tours");
+      navigate("/signin");
+      return;
+    }
     try {
       const response = await fetch(
         `https://wildlens-tours-backend-culd.onrender.com/api/tour/getAllTours?search=${searchTerm}`
